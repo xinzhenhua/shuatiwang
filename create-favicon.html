@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favicon生成工具</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #4a6cf7;
+        }
+        canvas {
+            border: 1px solid #ddd;
+            margin: 10px 0;
+        }
+        button {
+            background-color: #4a6cf7;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        button:hover {
+            background-color: #3a5ce5;
+        }
+        .steps {
+            background-color: #f5f7fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Favicon生成工具</h1>
+    <p>这个工具可以帮助您将"刷"字图标转换为favicon图标。</p>
+    
+    <div class="steps">
+        <h2>步骤一：选择图像文件</h2>
+        <input type="file" id="imageInput" accept="image/*">
+    </div>
+    
+    <div class="steps">
+        <h2>步骤二：生成favicon</h2>
+        <canvas id="canvas" width="64" height="64"></canvas><br>
+        <button id="generateBtn">生成图标</button>
+    </div>
+    
+    <div class="steps">
+        <h2>步骤三：下载图标文件</h2>
+        <button id="downloadPngBtn">下载PNG图标</button>
+        <p>将下载的图标保存为"favicon.png"文件，并放在项目根目录中。</p>
+    </div>
+    
+    <script>
+        const imageInput = document.getElementById('imageInput');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const generateBtn = document.getElementById('generateBtn');
+        const downloadPngBtn = document.getElementById('downloadPngBtn');
+        let imageLoaded = false;
+        
+        // 默认设置蓝色背景
+        ctx.fillStyle = '#33aaff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'white';
+        ctx.font = 'bold 48px "Microsoft YaHei"';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('刷', canvas.width / 2, canvas.height / 2);
+        
+        imageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        // 清除画布
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        
+                        // 绘制图像，保持纵横比并居中
+                        const scale = Math.min(canvas.width / img.width, canvas.height / img.height);
+                        const x = (canvas.width - img.width * scale) / 2;
+                        const y = (canvas.height - img.height * scale) / 2;
+                        ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+                        
+                        imageLoaded = true;
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        generateBtn.addEventListener('click', function() {
+            if (!imageLoaded) {
+                // 如果没有加载图像，则使用默认的"刷"字
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#33aaff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 48px "Microsoft YaHei"';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('刷', canvas.width / 2, canvas.height / 2);
+            }
+            alert('图标已生成！您可以点击下载按钮保存图标文件。');
+        });
+        
+        downloadPngBtn.addEventListener('click', function() {
+            const link = document.createElement('a');
+            link.download = 'favicon.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+    </script>
+</body>
+</html> 

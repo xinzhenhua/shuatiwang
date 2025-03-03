@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>刷题王</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- 先引用ico格式，确保兼容所有浏览器 -->
+    <link rel="shortcut icon" href="favicon.ico?v=1.2" type="image/x-icon">
+    <!-- 然后提供png作为备用 -->
+    <link rel="icon" href="favicon.png?v=1.2" type="image/png">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>刷题王</h1>
+            <div class="filter-controls">
+                <select id="yearSelect">
+                    <option value="">选择年份</option>
+                </select>
+                <select id="subjectSelect">
+                    <option value="">选择科目</option>
+                </select>
+                <select id="chapterSelect">
+                    <option value="">选择章节</option>
+                </select>
+                <button id="wrongQuestionsBtn">错题本</button>
+                <button id="resetBtn">重置</button>
+                
+                <!-- 添加面包屑下拉菜单 -->
+                <div class="more-options">
+                    <button id="moreOptionsBtn">更多选项 ▼</button>
+                    <div class="dropdown-menu">
+                        <button id="importBtn">导入题库</button>
+                        <button id="exportJsonBtn">导出题库JSON</button>
+                        <button id="importJsonBtn">导入题库JSON</button>
+                        <button id="cloudSaveBtn">保存到云端</button>
+                        <button id="cloudLoadBtn">从云端加载</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <main>
+            <div id="quizContainer">
+                <div id="startScreen" class="active">
+                    <h2>欢迎使用刷题王</h2>
+                    <p>请选择年份、科目和章节开始刷题</p>
+                    <button id="continueBtn" class="continue-btn hidden">继续上次答题</button>
+                </div>
+                
+                <div id="questionScreen" class="hidden">
+                    <div class="question-header">
+                        <div class="question-nav">
+                            <h2 id="questionTitle" class="question-title">题目标题</h2>
+                            <button id="backBtn" class="back-btn"><i class="arrow-left"></i></button>
+                        </div>
+                        <div class="question-info-container">
+                            <div class="question-info">
+                                <span id="questionType"></span>
+                                <span id="questionNumber"></span>
+                            </div>
+                            <div class="progress-info">
+                                <span id="progressText"></span>
+                                <div class="progress-bar">
+                                    <div id="progressFill"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="questionContent"></div>
+                    
+                    <div id="optionsContainer"></div>
+                    
+                    <div id="judgementContainer" class="hidden">
+                        <button id="trueBtn">正确</button>
+                        <button id="falseBtn">错误</button>
+                    </div>
+                    
+                    <div id="feedbackContainer" class="hidden">
+                        <div id="feedbackContent"></div>
+                        <div class="feedback-buttons">
+                            <button id="nextBtn">下一题</button>
+                            <button id="explainBtn" class="hidden">答案解析</button>
+                        </div>
+                        <div id="explanationContainer" class="hidden"></div>
+                    </div>
+                </div>
+                
+                <div id="resultsScreen" class="hidden">
+                    <h2>答题结果</h2>
+                    <div id="scoreInfo"></div>
+                    <div id="wrongQuestionsSummary"></div>
+                    <button id="restartBtn">重新开始</button>
+                    <button id="reviewWrongBtn">复习错题</button>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>刷题王 &copy; 2024 - 让刷题更高效</p>
+        </footer>
+    </div>
+    
+    <div id="importModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>导入题库</h3>
+                <span class="close-btn">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="importYear">年份:</label>
+                    <select id="importYear" required>
+                        <option value="">选择年份</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="new">新增年份</option>
+                    </select>
+                    <input type="text" id="newYearInput" class="hidden" placeholder="请输入年份">
+                </div>
+                <div class="form-group">
+                    <label for="importSubject">科目:</label>
+                    <select id="importSubject" required>
+                        <option value="">选择科目</option>
+                        <option value="new">新增科目</option>
+                    </select>
+                    <input type="text" id="newSubjectInput" class="hidden" placeholder="请输入科目名称">
+                </div>
+                <div class="form-group">
+                    <label for="importChapter">章节:</label>
+                    <input type="text" id="importChapter" placeholder="请输入章节名称" required>
+                </div>
+                <div class="form-group">
+                    <label for="importContent">题库内容:</label>
+                    <textarea id="importContent" rows="10" placeholder="请粘贴题库和答案内容" required></textarea>
+                </div>
+                <div class="import-status" id="importStatus"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="parseBtn">解析</button>
+                <button id="previewBtn" disabled>预览</button>
+                <button id="importConfirmBtn" disabled>导入</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 导出题库模态框 -->
+    <div id="exportModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>导出题库</h3>
+                <span class="close-btn">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <span class="export-title">请选择导出范围</span>
+                    <span class="export-subtitle">选择需要导出的题库范围，导出后可分享给其他用户</span>
+                    <div class="export-options">
+                        <label class="radio-label">
+                            <input type="radio" name="exportScope" value="all" checked>
+                            <span>全部题库</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="exportScope" value="year">
+                            <span>指定年份</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="exportScope" value="subject">
+                            <span>指定科目</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="exportScope" value="chapter">
+                            <span>指定章节</span>
+                        </label>
+                    </div>
+                </div>
+                <div id="exportYearContainer" class="form-group hidden">
+                    <label for="exportYear">选择年份:</label>
+                    <select id="exportYear">
+                        <option value="">请选择年份</option>
+                    </select>
+                </div>
+                <div id="exportSubjectContainer" class="form-group hidden">
+                    <label for="exportSubject">选择科目:</label>
+                    <select id="exportSubject">
+                        <option value="">请选择科目</option>
+                    </select>
+                </div>
+                <div id="exportChapterContainer" class="form-group hidden">
+                    <label for="exportChapter">选择章节:</label>
+                    <select id="exportChapter">
+                        <option value="">请选择章节</option>
+                    </select>
+                </div>
+                <div class="export-status" id="exportStatus"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="exportConfirmBtn">导出</button>
+                <button id="exportCancelBtn">取消</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="questions.js"></script>
+    <script src="script.js"></script>
+    <script src="api-fix.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+</body>
+</html> 

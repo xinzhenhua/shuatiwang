@@ -1,0 +1,1518 @@
+/* 基础样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 头部样式 */
+header {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    color: #4a6cf7;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.filter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+select, button {
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: white;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s;
+}
+
+select {
+    flex: 1;
+    min-width: 120px;
+}
+
+button {
+    background-color: #4a6cf7;
+    color: white;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+button:hover {
+    background-color: #3a5ce5;
+}
+
+/* 按钮点击波纹效果 */
+button:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%, -50%);
+    transform-origin: 50% 50%;
+}
+
+button:active:after {
+    animation: ripple 0.4s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        opacity: 1;
+        transform: scale(0, 0) translate(-50%, -50%);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(20, 20) translate(-50%, -50%);
+    }
+}
+
+#resetBtn {
+    background-color: #f76a6a;
+}
+
+#resetBtn:hover {
+    background-color: #e55a5a;
+}
+
+#wrongQuestionsBtn {
+    background-color: #6ac076;
+}
+
+#wrongQuestionsBtn:hover {
+    background-color: #58ad63;
+}
+
+/* 主内容区样式 */
+main {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    min-height: 500px;
+}
+
+.hidden {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+}
+
+.active {
+    display: block;
+}
+
+#startScreen {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+#startScreen h2 {
+    color: #4a6cf7;
+    margin-bottom: 15px;
+}
+
+.continue-btn {
+    background-color: #4a6cf7;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 20px;
+    margin-top: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.continue-btn:hover {
+    background-color: #3a5ce5;
+}
+
+/* 问题展示区样式 */
+.question-header {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.question-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.question-title {
+    flex-grow: 1;
+    text-align: center;
+    margin: 0;
+    color: #4a6cf7;
+    font-size: 18px;
+}
+
+.back-btn {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #4a6cf7;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border-radius: 5px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 36px;
+    max-width: 36px;
+    height: 30px;
+    overflow: hidden;
+}
+
+.arrow-left {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-top: 3px solid white;
+    border-left: 3px solid white;
+    transform: rotate(-45deg);
+    margin: 0 auto;
+}
+
+.back-btn .arrow-left {
+    margin: auto;
+}
+
+.back-btn .btn-text {
+    display: none;
+}
+
+.back-btn:hover {
+    background-color: #3a5ce5;
+}
+
+.question-info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.question-info {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.question-info #questionNumber {
+    color: #666;
+}
+
+#questionType {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #4a6cf7;
+    color: white;
+    border-radius: 4px;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.progress-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#progressText {
+    color: #666;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.progress-bar {
+    width: 150px;
+    height: 8px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 2px;
+    border: 1px solid #e0e0e0;
+}
+
+#progressFill {
+    height: 100%;
+    background-color: #4a6cf7;
+    width: 0%;
+    transition: width 0.3s;
+}
+
+/* 红色进度条样式 */
+.progress-bar-container {
+    position: relative;
+    width: 100%;
+    max-width: 200px;
+    height: 10px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+}
+
+.progress-bar-red {
+    height: 100%;
+    background-color: #ff4d4f;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+#questionContent {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 25px;
+}
+
+/* 选项样式 */
+#optionsContainer {
+    display: none; /* 默认不显示 */
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+#optionsContainer.active {
+    display: flex;
+}
+
+.option {
+    padding: 12px 15px;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.option:hover {
+    background-color: #e9ecef;
+}
+
+.option.selected {
+    background-color: #d4e4ff;
+    border-color: #4a6cf7;
+}
+
+.option.correct {
+    background-color: #d4edda;
+    border-color: #28a745;
+}
+
+.option.incorrect {
+    background-color: #f8d7da;
+    border-color: #dc3545;
+}
+
+/* 判断题按钮样式 */
+#judgementContainer {
+    display: none; /* 默认不显示 */
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+#judgementContainer.active {
+    display: flex;
+}
+
+#judgementContainer button {
+    flex: 1;
+    padding: 12px;
+    font-size: 16px;
+}
+
+#trueBtn {
+    background-color: #28a745;
+}
+
+#trueBtn:hover {
+    background-color: #218838;
+}
+
+#falseBtn {
+    background-color: #dc3545;
+}
+
+#falseBtn:hover {
+    background-color: #c82333;
+}
+
+/* 反馈区域样式 */
+#feedbackContainer {
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+#feedbackContent {
+    margin-bottom: 15px;
+}
+
+#feedbackContent.correct {
+    color: #28a745;
+}
+
+#feedbackContent.incorrect {
+    color: #dc3545;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+#explainBtn {
+    background-color: #5e35b1;
+}
+
+#explainBtn:hover {
+    background-color: #4527a0;
+}
+
+#explanationContainer {
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+    border-left: 4px solid #5e35b1;
+}
+
+#explanationContainer.loading {
+    opacity: 0.7;
+}
+
+.explanation-title {
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #5e35b1;
+}
+
+/* 结果页面样式 */
+#resultsScreen {
+    text-align: center;
+    padding: 30px 20px;
+}
+
+#resultsScreen h2 {
+    color: #4a6cf7;
+    margin-bottom: 20px;
+}
+
+#scoreInfo {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+#wrongQuestionsSummary {
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+#wrongQuestionsSummary h3 {
+    margin-bottom: 10px;
+}
+
+.wrong-question-item {
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+#resultsScreen button {
+    margin: 0 10px;
+}
+
+/* 页脚样式 */
+footer {
+    text-align: center;
+    margin-top: 30px;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+/* 弹窗样式 */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #fff;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+}
+
+.modal-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: #4a6cf7;
+}
+
+.close-btn {
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #888;
+}
+
+.close-btn:hover {
+    color: #333;
+}
+
+.modal-body {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group select,
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 200px;
+}
+
+.import-status {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.import-status.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.import-status.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.import-status.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+#importBtn {
+    background-color: #6c5ce7;
+}
+
+#importBtn:hover {
+    background-color: #5b4bdb;
+}
+
+#cloudSaveBtn {
+    background-color: #3498db;
+}
+
+#cloudSaveBtn:hover {
+    background-color: #2980b9;
+}
+
+#cloudLoadBtn {
+    background-color: #9b59b6;
+}
+
+#cloudLoadBtn:hover {
+    background-color: #8e44ad;
+}
+
+#parseBtn, #previewBtn, #importConfirmBtn {
+    min-width: 100px;
+}
+
+#parseBtn {
+    background-color: #4a6cf7;
+}
+
+#previewBtn {
+    background-color: #6c5ce7;
+}
+
+#importConfirmBtn {
+    background-color: #27ae60;
+}
+
+#parseBtn:disabled, #previewBtn:disabled, #importConfirmBtn:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+}
+
+/* 预览区样式 */
+#previewContainer {
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+}
+
+.preview-question {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.preview-question:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.preview-question h4 {
+    margin: 0 0 10px 0;
+    color: #2c3e50;
+}
+
+.preview-correct-option {
+    color: #27ae60;
+    font-weight: bold;
+}
+
+.preview-stats {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #e9f7ef;
+    border-radius: 4px;
+    border-left: 4px solid #27ae60;
+}
+
+.preview-stats p {
+    margin: 0 0 5px 0;
+}
+
+.preview-stats ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+/* 浮动状态提示框 */
+.floating-status {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 5px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    z-index: 2000;
+    animation: fadeIn 0.3s, fadeOut 0.3s 2.7s;
+}
+
+.floating-status.success {
+    background-color: #d4edda;
+    color: #155724;
+    border-left: 4px solid #28a745;
+}
+
+.floating-status.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-left: 4px solid #dc3545;
+}
+
+.floating-status.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border-left: 4px solid #17a2b8;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-20px); }
+}
+
+/* 响应式设计 - 移动端优化 */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 15px 10px;
+    }
+    
+    header {
+        padding: 15px;
+    }
+    
+    .filter-controls {
+        gap: 10px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    select, button {
+        width: 100%;
+        padding: 12px 15px;
+        margin-bottom: 5px;
+        font-size: 16px; /* 移动端更大的字体提高可点击性 */
+    }
+    
+    select {
+        min-width: 100%;
+    }
+    
+    /* 确保按钮有足够的点击区域 */
+    button {
+        height: 48px;
+        touch-action: manipulation; /* 优化触摸操作 */
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* 移除iOS点击高亮 */
+    }
+    
+    /* 一行一个下拉菜单 */
+    #yearSelect, #subjectSelect, #chapterSelect {
+        grid-column: span 3; /* 下拉菜单跨越整行 */
+    }
+    
+    /* 一行三个按钮 */
+    #wrongQuestionsBtn, #resetBtn, .more-options {
+        grid-column: span 1;
+        margin: 5px;
+    }
+    
+    /* 面包屑按钮样式调整 */
+    .more-options {
+        width: 100%;
+    }
+    
+    #moreOptionsBtn {
+        width: 100%;
+        height: 48px;
+        padding: 0 10px;
+        font-size: 14px;
+    }
+    
+    /* 修复移动端面包屑点击不友好的问题 */
+    .dropdown-menu button {
+        height: auto;
+        font-size: 15px;
+    }
+    
+    /* 在移动端点击显示下拉菜单而不是悬停 */
+    .more-options:hover .dropdown-menu {
+        display: none;
+    }
+    
+    .dropdown-menu.show {
+        display: block;
+    }
+    
+    /* 对话框适配 */
+    .modal-content {
+        width: 95%;
+        max-height: 85vh;
+    }
+    
+    /* 提高表单控件易用性 */
+    .form-group select,
+    .form-group input,
+    .form-group textarea {
+        padding: 12px;
+        font-size: 16px; /* 避免iOS自动缩放 */
+    }
+    
+    /* 加大移动端按钮点击区域 */
+    .modal-footer button {
+        padding: 12px 20px;
+        margin: 0 5px;
+    }
+    
+    /* 改进移动端浮动状态提示 */
+    .floating-status {
+        top: auto;
+        bottom: 20px;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 400px;
+        text-align: center;
+        padding: 15px;
+        font-size: 15px;
+    }
+    
+    /* 改进选择题选项样式 */
+    .option {
+        padding: 15px;
+        margin-bottom: 10px;
+    }
+    
+    /* 结果页面按钮布局优化 */
+    #resultsScreen button {
+        width: 100%;
+        max-width: 300px;
+        margin: 10px auto;
+        display: block;
+    }
+    
+    /* 优化移动端模态框内部按钮 */
+    .modal-footer {
+        flex-direction: column;
+    }
+    
+    .modal-footer button {
+        width: 100%;
+        margin: 5px 0;
+    }
+    
+    /* 增加导入题库按钮的间距 */
+    #parseBtn, #previewBtn, #importConfirmBtn {
+        margin-bottom: 10px;
+    }
+    
+    /* 修改：在移动端一行显示三个按钮 */
+    #wrongQuestionsBtn, #resetBtn, .more-options {
+        grid-column: span 1;
+        margin: 5px;
+    }
+    
+    /* 保留这些样式以确保按钮内容正常显示 */
+    #moreOptionsBtn {
+        width: 100%;
+    }
+    
+    .dropdown-menu {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        max-width: 300px;
+        min-width: unset;
+        right: auto;
+        z-index: 1010;
+        border-radius: 12px;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+    }
+    
+    .dropdown-menu::before {
+        content: "更多功能";
+    }
+    
+    /* 添加遮罩层背景 */
+    .dropdown-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 1005;
+    }
+    
+    .dropdown-overlay.show {
+        display: block;
+    }
+    
+    #moreOptionsBtn {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+    
+    .dropdown-menu button {
+        padding: 12px 10px;
+        font-size: 16px;
+    }
+    
+    .question-header {
+        gap: 10px;
+    }
+    
+    .question-title {
+        font-size: 16px;
+        margin: 0;
+        width: calc(100% - 50px);
+        text-align: center;
+    }
+    
+    .back-btn {
+        min-width: 30px;
+        max-width: 30px;
+        padding: 0;
+        height: 28px;
+    }
+    
+    .arrow-left {
+        width: 8px;
+        height: 8px;
+        border-width: 2.5px;
+        border-top: 2.5px solid white;
+        border-left: 2.5px solid white;
+        border-right: none;
+        transform: rotate(-45deg);
+    }
+    
+    .question-nav {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        padding: 5px 0 10px 0;
+    }
+    
+    .question-info-container {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+        margin-top: 5px;
+    }
+    
+    .progress-info {
+        position: absolute;
+        right: 0;
+        top: 0;
+        align-items: center;
+    }
+    
+    #progressText {
+        margin-right: 8px;
+        color: #666;
+    }
+    
+    .progress-bar {
+        width: 100px;
+        height: 8px;
+        border: 1px solid #ddd;
+    }
+}
+
+/* 小型移动设备优化 */
+@media screen and (max-width: 480px) {
+    header h1 {
+        font-size: 24px;
+    }
+    
+    main {
+        padding: 20px 15px;
+    }
+    
+    /* 调整极小屏幕的间距 */
+    .filter-controls {
+        gap: 6px;
+    }
+    
+    /* 对于下拉菜单保持一行一个 */
+    #yearSelect, #subjectSelect, #chapterSelect {
+        grid-column: span 3;
+    }
+    
+    /* 控制按钮尺寸，确保一行3个 */
+    #wrongQuestionsBtn, #resetBtn, .more-options {
+        grid-column: span 1;
+        margin: 3px;
+    }
+    
+    /* 调整按钮文本大小 */
+    button {
+        font-size: 14px;
+        padding: 10px 5px;
+    }
+    
+    /* 改进面包屑菜单文字大小 */
+    #moreOptionsBtn {
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    /* 改进下拉选项在超小屏幕上的显示 */
+    .dropdown-menu button {
+        padding: 10px;
+    }
+    
+    /* 判断题按钮调整 */
+    #judgementContainer {
+        flex-direction: column;
+    }
+    
+    #judgementContainer button {
+        margin-bottom: 10px;
+    }
+    
+    .back-btn {
+        min-width: 25px;
+        max-width: 25px;
+        padding: 0;
+        height: 25px;
+    }
+    
+    .question-title {
+        font-size: 14px;
+        width: calc(100% - 35px);
+    }
+    
+    .arrow-left {
+        width: 7px;
+        height: 7px;
+        border-width: 2px;
+        border-top: 2px solid white;
+        border-left: 2px solid white;
+        border-right: none;
+        transform: rotate(-45deg);
+    }
+    
+    #questionType {
+        padding: 3px 6px;
+        font-size: 12px;
+        margin-right: 6px;
+    }
+    
+    #questionNumber {
+        font-size: 12px;
+    }
+    
+    .question-info-container {
+        position: relative;
+        margin-top: 5px;
+    }
+    
+    .question-info {
+        margin-right: 0;
+        display: flex;
+        align-items: center;
+    }
+    
+    .progress-info {
+        position: absolute;
+        right: 0;
+        top: 2px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    #progressText {
+        font-size: 12px;
+        white-space: nowrap;
+        margin-right: 6px;
+        color: #666;
+    }
+    
+    .progress-bar {
+        width: 80px;
+        height: 6px;
+        border: 1px solid #ddd;
+        background-color: #f5f5f5;
+    }
+    
+    /* 红框区域 - 提供高亮样式便于参考 */
+    .question-info-container .progress-info {
+        padding: 3px;
+        border-radius: 4px;
+    }
+}
+
+/* 面包屑下拉菜单样式 */
+.more-options {
+    position: relative;
+    display: inline-block;
+    z-index: 50;
+}
+
+#moreOptionsBtn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 15px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 10px;
+}
+
+#moreOptionsBtn:hover {
+    background-color: #0056b3;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: auto;
+    min-width: 200px;
+    max-width: 300px;
+    background-color: #212529;
+    border-radius: 8px;
+    padding: 15px 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    z-index: 9999;
+}
+
+.dropdown-menu::before {
+    content: "更多功能";
+    display: block;
+    text-align: center;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    font-weight: bold;
+}
+
+.dropdown-menu.show {
+    display: block !important;
+}
+
+.dropdown-menu button {
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    text-align: left;
+    background-color: #343a40;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.dropdown-menu button:last-child {
+    margin-bottom: 0;
+}
+
+.dropdown-menu button:hover {
+    background-color: #495057;
+}
+
+/* 媒体查询，针对移动设备优化 */
+@media (max-width: 768px) {
+    .dropdown-menu {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        max-width: 300px;
+        min-width: unset;
+        right: auto;
+        z-index: 9999;
+        border-radius: 12px;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+    }
+    
+    .dropdown-menu.show {
+        display: block !important;
+    }
+    
+    .dropdown-menu::before {
+        content: "更多功能";
+    }
+    
+    /* 此处移除了覆盖层相关样式 */
+}
+
+/* 特别小的屏幕处理 */
+@media (max-width: 480px) {
+    .dropdown-menu {
+        width: 90%; /* 在特小屏幕上稍微加宽 */
+        max-width: 280px;
+    }
+}
+
+/* 移除覆盖区 */
+.dropdown-overlay {
+    display: none !important;
+}
+
+.dropdown-overlay.show {
+    display: none !important;
+}
+
+@media (max-width: 768px) {
+    .dropdown-menu {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        max-width: 300px;
+        min-width: unset;
+        right: auto;
+        z-index: 9999;
+        border-radius: 12px;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+    }
+    
+    .dropdown-menu.show {
+        display: block !important;
+    }
+    
+    .dropdown-menu::before {
+        content: "更多功能";
+    }
+    
+    /* 其他样式保持不变 */
+}
+
+/* 导出/导入JSON按钮 */
+#exportJsonBtn {
+    background-color: #27ae60;
+}
+
+#exportJsonBtn:hover {
+    background-color: #2ecc71;
+}
+
+#importJsonBtn {
+    background-color: #e67e22;
+}
+
+#importJsonBtn:hover {
+    background-color: #f39c12;
+}
+
+/* 状态消息样式 */
+.status-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: none;
+    animation: fadeIn 0.3s, fadeOut 0.3s 2.7s;
+    white-space: nowrap;
+    max-width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.status-message.success {
+    background-color: #2ecc71;
+}
+
+.status-message.error {
+    background-color: #e74c3c;
+}
+
+.status-message.info {
+    background-color: #3498db;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, 20px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: translate(-50%, 0); }
+    to { opacity: 0; transform: translate(-50%, 20px); }
+}
+
+/* 导出模态框样式 */
+.export-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px 0;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.radio-label:hover {
+    background-color: #e9f5fe;
+}
+
+.radio-label input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.radio-label span {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 500;
+    color: #495057;
+}
+
+.radio-label span:before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 15px;
+    border: 2px solid #ced4da;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    background-color: white;
+    box-sizing: border-box;
+}
+
+.radio-label input[type="radio"]:checked + span:before {
+    border-color: #4a6cf7;
+    border-width: 6px;
+}
+
+.radio-label input[type="radio"]:focus + span:before {
+    box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.25);
+}
+
+#exportYearContainer,
+#exportSubjectContainer,
+#exportChapterContainer {
+    margin-top: 5px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 15px;
+    margin: 0;
+    opacity: 0;
+}
+
+#exportYearContainer.show,
+#exportSubjectContainer.show,
+#exportChapterContainer.show {
+    max-height: 100px;
+    padding: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    opacity: 1;
+}
+
+.export-status {
+    margin-top: 15px;
+    padding: 12px 15px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.export-status.success {
+    background-color: #d4edda;
+    color: #155724;
+    border-left: 4px solid #28a745;
+}
+
+.export-status.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-left: 4px solid #dc3545;
+}
+
+.export-status.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border-left: 4px solid #17a2b8;
+}
+
+#exportConfirmBtn {
+    background-color: #4a6cf7;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 10px 20px;
+}
+
+#exportConfirmBtn:hover {
+    background-color: #3a5bd7;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(74, 108, 247, 0.2);
+}
+
+#exportCancelBtn {
+    background-color: #f1f3f5;
+    color: #495057;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 10px 20px;
+}
+
+#exportCancelBtn:hover {
+    background-color: #e9ecef;
+    color: #212529;
+    transform: translateY(-2px);
+}
+
+.modal-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    border-radius: 8px 8px 0 0;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: #4a6cf7;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.export-title {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.export-subtitle {
+    font-size: 13px;
+    color: #6c757d;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.form-group select {
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #ced4da;
+    width: 100%;
+    transition: all 0.2s ease;
+    background-color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.form-group select:hover {
+    border-color: #b3bbc3;
+}
+
+.form-group select:focus {
+    border-color: #4a6cf7;
+    box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.25);
+    outline: none;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #495057;
+}
+
+/* 隐藏的样式调整 */
+.hidden {
+    display: none !important;
+}
+
+/* ... 其余样式 ... */ 
